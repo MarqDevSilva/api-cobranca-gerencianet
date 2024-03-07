@@ -35,7 +35,7 @@ app.post('/cob', async (req, res) => {
       bolResponse: bolResponse.data,
     });
   } catch (error) {
-    res.status(500).json({ error: "Erro interno do servidor" });
+    res.status(500).json({ error: "Erro interno do servidor", error });
   }
 });
 
