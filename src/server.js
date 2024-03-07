@@ -22,7 +22,7 @@ async function restartReqGN() {
   });
 }
 
-setInterval(restartReqGN, 3600000);
+setInterval(restartReqGN, 600000);
 
 app.post('/cob', async (req, res) => {
   try {
