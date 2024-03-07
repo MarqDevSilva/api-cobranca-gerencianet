@@ -10,7 +10,7 @@ const authenticate = ({ clientID, clientSecret }) => {
 
   return axios({
     method: 'POST',
-    url: `${process.env.GN_ENDPOINT}/v1/authorize`,
+    url: `${process.env.GN_ENDPOINT_COB}/v1/authorize`,
     headers: {
       Authorization: `Basic ${credentials}`,
       'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ const GNRequest = async (credentials) => {
   const authResponse = await authenticate(credentials);
   const accessToken = authResponse.data?.access_token;
   return axios.create({
-    baseURL: process.env.GN_ENDPOINT,
+    baseURL: process.env.GN_ENDPOINT_COB,
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'
