@@ -28,16 +28,30 @@ app.post('/cob', async (req, res) => {
   try {
     const reqGN = await reqGNAlready;
     const dataCob = req.body;
+    const metadata = {
+      notification_url: 'http://inscreveai.com.br/notification'
+    };
+
+    const body = {...dataCob, metadata}
     
-    const bolResponse = await reqGN.post('/v1/charge/one-step', dataCob);
+    const bolResponse = await reqGN.post('/v1/charge/one-step', body);
   
     res.status(200).json({
       bolResponse: bolResponse.data,
     });
+    
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: "Erro interno do servidor" });
   }
+});
+
+app.post('/notification', (req, res) => {
+  console.log(req.body);
+
+  //handlePixWebhook(req.body);
+
+  res.send('200');
 });
 
 app.listen(9000, () => {
