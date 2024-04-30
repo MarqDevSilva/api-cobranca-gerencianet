@@ -52,11 +52,11 @@ app.post('/notification', async (req, res) => {
   try{
     const reqGN = await reqGNAlready;
 
-    const { token } = req.body;
+    const { notification } = req.body;
 
     console.log('TOKEN:', req.body)
 
-    const response = await reqGN.get(`/v1/notification/${token}`);
+    const response = await reqGN.get(`/v1/notification/${notification}`);
     
     const { data } = response.data
 
