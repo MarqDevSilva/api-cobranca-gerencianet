@@ -54,15 +54,16 @@ app.post('/notification', async (req, res) => {
     const { token } = req.body;
 
     console.log('TOKEN:', req.body)
+    console.log('TOKEN:', req)
 
-    const response = await reqGN.get(`/v1/notification/${token}`);
+    //const response = await reqGN.get(`/v1/notification/${token}`);
     
-    const { data } = response.data
+    //const { data } = response.data
 
     console.log('Reposta:', data)
-    if(data){
-      await updateStatus(data);
-    }
+    //if(data){
+      //await updateStatus(data);
+    //}
 
     res.sendStatus(200);
   }catch (error){
