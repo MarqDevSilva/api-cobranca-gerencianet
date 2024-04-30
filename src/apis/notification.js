@@ -8,7 +8,6 @@ const dbConfig = {
     database: 'api_spring'
 };
 
-const connection = mysql.createConnection(dbConfig);
 
 async function updateStatus(data) {
   try {
@@ -19,6 +18,7 @@ async function updateStatus(data) {
         const statusAtual = status.current;
         const connection = await mysql.createConnection(dbConfig);
         await submitQuery(connection, chargeId, statusAtual)
+        console.log('atualizando status')
         await connection.end();
       }
   } catch (error) {
@@ -33,6 +33,7 @@ async function submitQuery(connection, chargeId, status) {
 
         if (results.length > 0) {
             const id = results[0].id;
+            console.log('ID', id)
             await connection.execute(`UPDATE inscricao SET status = ? WHERE id = ?;`, [status, id]);
         } else {
             throw new Error("Nenhum ID encontrado para o chargeId especificado.");

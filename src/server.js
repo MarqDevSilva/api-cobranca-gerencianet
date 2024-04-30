@@ -49,11 +49,17 @@ app.post('/cob', async (req, res) => {
 
 app.post('/notification', async (req, res) => {
   try{
-    const { token } = req.body;
     const reqGN = await reqGNAlready;
+
+    const { token } = req.body;
+
+    console.log('TOKEN:', token)
+
     const response = await reqGN.get(`/v1/notification/${token}`);
+    
     const { data } = response.data
 
+    console.log('Reposta:', data)
     if(data){
       await updateStatus(data);
     }
