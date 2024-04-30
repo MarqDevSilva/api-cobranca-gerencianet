@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const bodyParser = require('body-parser');
 const GNRequest = require('./apis/gerencianet');
+const { updateStatus } = require('./apis/notification');
 
 const app = express();
 
@@ -46,12 +47,21 @@ app.post('/cob', async (req, res) => {
   }
 });
 
-app.post('/notification', (req, res) => {
-  console.log(req.body);
+app.post('/notification', async (req, res) => {
+  try{
+    const { token } = req.body;
+    const reqGN = await reqGNAlready;
+    const response = await reqGN.get(`/v1/notification/${token}`);
+    const { data } = response.data
 
-  //handlePixWebhook(req.body);
+    if(data){
+      await updateStatus(data);
+    }
 
-  res.send('200');
+    res.sendStatus(200);
+  }catch (error){
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
 });
 
 app.listen(9000, () => {
