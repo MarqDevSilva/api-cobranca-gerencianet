@@ -10,6 +10,7 @@ const { updateStatus } = require('./apis/notification');
 const app = express();
 
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 let reqGNAlready = GNRequest({
   clientID: process.env.GN_CLIENT_ID,
