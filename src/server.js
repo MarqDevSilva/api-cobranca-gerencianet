@@ -30,7 +30,7 @@ app.post('/cob', async (req, res) => {
     const reqGN = await reqGNAlready;
     const dataCob = req.body;
     const metadata = {
-      notification_url: 'http://gn.inscreveai.com.br/notification'
+      notification_url: 'http://inscreveai.com.br/notification'
     };
 
     const body = {...dataCob, metadata}
