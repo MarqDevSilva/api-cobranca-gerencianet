@@ -48,6 +48,27 @@ app.post('/cob', async (req, res) => {
   }
 });
 
+app.post('/retry/:id', async (req, res) => {
+  try {
+    const reqGN = await reqGNAlready;
+    const body = req.body;
+    
+    const id = req.params.id;
+
+    const Response = await reqGN.post(`/v1/charge/${id}/retry`, body);
+  
+    res.status(200).json({
+      response: Response.data,
+    });
+    
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+});
+
+
+
 app.post('/notification', async (req, res) => {
   try{
     const reqGN = await reqGNAlready;
