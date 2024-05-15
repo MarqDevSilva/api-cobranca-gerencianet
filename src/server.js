@@ -48,7 +48,7 @@ app.post('/cob', async (req, res) => {
   }
 });
 
-app.post('/retry/:id', async (req, res) => {
+app.post('/cob/:id', async (req, res) => {
   try {
     const reqGN = await reqGNAlready;
     const body = req.body;
