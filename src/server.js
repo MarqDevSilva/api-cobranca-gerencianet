@@ -48,6 +48,32 @@ app.post('/cob', async (req, res) => {
   }
 });
 
+app.post('/cob/link', async (req, res) => {
+  try{
+    const body = req.body
+    const charge = await reqGN.post('/v1/charge', body);
+
+    const charge_id = charge.data.charge_id;
+    const link = await reqGN.post(`/v1/charge/${charge_id}/link`)
+
+    const metadata = {
+      notification_url: 'http://inscreveai.com.br/notification',
+    };
+
+    const notification = await reqGN.put(`/v1/charge/${charge_id}/metadata`, metadata)
+
+    res.status(200).json({
+      response: link.data
+    })
+
+    console.log(notification.data);
+  }
+  catch{
+    console.log(error)
+    res.status(500).json({ error: "Erro interno do servidor" });
+  }
+})
+
 app.post('/cob/:id', async (req, res) => {
   try {
     const reqGN = await reqGNAlready;
@@ -66,8 +92,6 @@ app.post('/cob/:id', async (req, res) => {
     res.status(500).json({ error: "Erro interno do servidor" });
   }
 });
-
-
 
 app.post('/notification', async (req, res) => {
   try{
