@@ -50,25 +50,15 @@ app.post('/cob', async (req, res) => {
 
 app.post('/cob/link', async (req, res) => {
   try{
+    const reqGN = await reqGNAlready;
     const body = req.body
-    const charge = await reqGN.post('/v1/charge', body);
-
-    const charge_id = charge.data.charge_id;
-    const link = await reqGN.post(`/v1/charge/${charge_id}/link`)
-
-    const metadata = {
-      notification_url: 'http://inscreveai.com.br/notification',
-    };
-
-    const notification = await reqGN.put(`/v1/charge/${charge_id}/metadata`, metadata)
+    const link = await reqGN.post('/v1/charge/one-step/link', body);
 
     res.status(200).json({
       response: link.data
     })
-
-    console.log(notification.data);
   }
-  catch{
+  catch(error){
     console.log(error)
     res.status(500).json({ error: "Erro interno do servidor" });
   }
