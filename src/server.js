@@ -89,8 +89,6 @@ app.post('/notification', async (req, res) => {
 
     const { notification } = req.body;
 
-    console.log('TOKEN:', req.body)
-
     const response = await reqGN.get(`/v1/notification/${notification}`);
     
     const { data } = response.data
@@ -101,7 +99,8 @@ app.post('/notification', async (req, res) => {
 
     res.sendStatus(200);
   }catch (error){
-    res.status(500).json({ error: "Erro interno do servidor" });
+    console.log(error)
+    res.status(500).json({ error: error });
   }
 });
 
