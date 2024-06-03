@@ -24,9 +24,10 @@ const authenticate = ({ clientID, clientSecret }) => {
 
 const GNRequest = async (credentials) => {
   const authResponse = await authenticate(credentials);
-  const accessToken = authResponse.data?.access_token;
+  const accessToken = authResponse.data.access_token;
+  console.log('AcessToken: ', accessToken)
   return axios.create({
-    baseURL: process.env.GN_ENDPOINT_COB,
+    baseURL: 'http://cobrancas.api.efipay.com.br',
     headers: {
       Authorization: `Bearer ${accessToken}`,
       'Content-Type': 'application/json'

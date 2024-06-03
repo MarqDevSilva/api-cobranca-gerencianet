@@ -26,63 +26,6 @@ async function restartReqGN() {
 
 setInterval(restartReqGN, 600000);
 
-app.post('/cob', async (req, res) => {
-  try {
-    const reqGN = await reqGNAlready;
-    const dataCob = req.body;
-    const metadata = {
-      notification_url: 'http://inscreveai.com.br/notification'
-    };
-
-    const body = {...dataCob, metadata}
-    
-    const bolResponse = await reqGN.post('/v1/charge/one-step', body);
-  
-    res.status(200).json({
-      bolResponse: bolResponse.data,
-    });
-    
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-});
-
-app.post('/cob/link', async (req, res) => {
-  try{
-    const reqGN = await reqGNAlready;
-    const body = req.body
-    const link = await reqGN.post('/v1/charge/one-step/link', body);
-
-    res.status(200).json({
-      response: link.data
-    })
-  }
-  catch(error){
-    console.log(error)
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-})
-
-app.post('/cob/:id', async (req, res) => {
-  try {
-    const reqGN = await reqGNAlready;
-    const body = req.body;
-    
-    const id = req.params.id;
-
-    const Response = await reqGN.post(`/v1/charge/${id}/retry`, body);
-  
-    res.status(200).json({
-      response: Response.data,
-    });
-    
-  } catch (error) {
-    console.log(error)
-    res.status(500).json({ error: "Erro interno do servidor" });
-  }
-});
-
 app.post('/notification', async (req, res) => {
   try{
     const reqGN = await reqGNAlready;
@@ -90,6 +33,8 @@ app.post('/notification', async (req, res) => {
     const { notification } = req.body;
 
     const response = await reqGN.get(`/v1/notification/${notification}`);
+
+    console.log(response)
     
     const { data } = response.data
 
@@ -99,7 +44,6 @@ app.post('/notification', async (req, res) => {
 
     res.sendStatus(200);
   }catch (error){
-    console.log(error)
     res.status(500).json({ error: error });
   }
 });
